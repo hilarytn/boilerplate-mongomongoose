@@ -5,11 +5,21 @@ const mongoose = require('mongoose');
 let Person;
 
 const createAndSavePerson = (done) => {
-  done(null /*, data*/);
+  let person = new Person({
+    name: 'Hilary Titus',
+    age: 26,
+    favoriteFoods: ['Rice', 'Yam', 'Beans']
+  });
+  person.save(function(err, data) {
+    if (err) return done(err)
+    done(null, data)})
 };
 
 const createManyPeople = (arrayOfPeople, done) => {
-  done(null /*, data*/);
+  Person.create(arrayOfPeople, function(err, result) { 
+    if (err) return err;
+    return done(null, result);
+  })
 };
 
 const findPeopleByName = (personName, done) => {
@@ -70,6 +80,36 @@ let personSchema = new mongoose.Schema({
 );
 
 Person = mongoose.model('Person', personSchema);
+
+createAndSavePerson(function(err, savedPerson) {
+  if (err) {
+    console.error('Error:', err);
+  } else {
+    console.log('Saved person:', savedPerson);
+  }
+});
+
+createManyPeople([
+  {name: "Shater",
+  age: 26,
+  favoriteFoods: ['Buns']
+},
+{name: "Iorfa",
+age: 28,
+favoriteFoods: ['Goruba']
+},
+{name: "Kater",
+age: 23,
+favoriteFoods: ['Peanut'] 
+}
+], function(err, savedPerson) {
+  if (err) {
+    console.error('Error:', err);
+  } else {
+    console.log('Saved person:', savedPerson);
+  }
+})
+
 /** **Well Done !!**
 /* You completed these challenges, let's go celebrate !
  */
