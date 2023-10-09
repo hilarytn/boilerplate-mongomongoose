@@ -1,4 +1,5 @@
 require('dotenv').config();
+const mongoose = require('mongoose');
 
 
 let Person;
@@ -50,6 +51,16 @@ const queryChain = (done) => {
 
   done(null /*, data*/);
 };
+
+mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+// Create a reference to the connection
+const db = mongoose.connection;
+
+// Handle connection events
+db.on('error', console.error.bind(console, 'Connection error:'));
+db.once('open', () => {
+  console.log('Connected to MongoDB!');
+});
 
 /** **Well Done !!**
 /* You completed these challenges, let's go celebrate !
