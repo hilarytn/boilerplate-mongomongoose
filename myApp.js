@@ -62,6 +62,14 @@ db.once('open', () => {
   console.log('Connected to MongoDB!');
 });
 
+let personSchema = new mongoose.Schema({
+  name: String,
+  age: Number,
+  favoriteFoods: [String]
+}
+);
+
+Person = mongoose.model('Person', personSchema);
 /** **Well Done !!**
 /* You completed these challenges, let's go celebrate !
  */
